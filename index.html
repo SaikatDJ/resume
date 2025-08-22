@@ -7,53 +7,103 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        /* Minimal inline tweaks so the file looks okay even without styles.css */
+        /* General Container */
         .container { max-width: 960px; margin: 30px auto; padding: 0 16px; }
+
+        /* Navigation */
         nav { 
             background: #fff; 
             box-shadow: 0 2px 6px rgba(0,0,0,0.05); 
-            position: sticky; /* NEW: Sticky positioning */
-            top: 0; /* NEW: Sticks to the top of the viewport */
-            z-index: 10; /* NEW: Ensures it stays above other content */
+            position: sticky; 
+            top: 0; 
+            z-index: 10; 
         }
-        nav ul { display:flex; gap:12px; list-style:none; padding:10px 16px; margin:0; justify-content:center; }
-        nav a { text-decoration:none; color:#333; font-weight:600; }
-        header { text-align:center; padding:28px 16px; background:#2c3e50; color:white; opacity: 1; }
+        nav ul { display:flex; gap:12px; list-style:none; padding:10px 16px; margin:0; justify-content:center; flex-wrap: wrap; }
+        nav a { text-decoration:none; color:#333 !important; font-weight:600; opacity: 1 !important; }
+        
+        /* Header */
+        header { text-align:center; padding:28px 16px; background:#2c3e50; color:white; }
         header h1 { margin:0; font-size:28px; }
         header p { margin:6px 0 0; }
+
+        /* Sections */
         section { background:white; padding:20px; margin:18px 0; border-radius:6px; box-shadow:0 6px 18px rgba(0,0,0,0.04); }
         h2 { margin-top:0; border-bottom:3px solid #f1f1f1; padding-bottom:8px; }
         ul { margin:0; padding-left:20px; }
+
+        /* Buttons */
         .btn { display:inline-block; margin-right:8px; padding:8px 12px; border-radius:6px; background:#2c3e50; color:white; text-decoration:none; font-weight:600; }
         .btn.secondary { background:#6c757d; }
+        .btn:hover { transform: translateY(-2px); transition: all 0.2s ease-in-out; }
+        .btn.secondary:hover { background-color: #5a6268; }
+
+        /* Contact */
         .contact-links { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+
+        /* Footer */
         footer { text-align:center; padding:16px; color:#777; font-size:14px; }
 
-        /* --- FIX: Force nav links to always be visible --- */
-        nav a {
-            color: #333 !important;
-            opacity: 1 !important;
+        /* Work / Portfolio Grid */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .work-item {
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .work-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .work-item p {
+            padding: 8px 12px;
+            margin: 0;
+            color: #555;
+        }
+        .work-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+        }
+
+        /* Smooth Scroll */
+        html { scroll-behavior: smooth; }
+
+        /* Responsive Nav */
+        @media(max-width: 600px){
+            nav ul { flex-direction: column; gap: 8px; }
         }
     </style>
 </head>
 <body>
 
+<!-- Navigation -->
 <nav>
     <ul>
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#work">Work</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
 </nav>
 
+<!-- Header -->
 <header class="animate__animated animate__fadeInDown">
     <h1>Saikat Mahato</h1>
     <p>Geophysicist | AI/ML for Geophysical Modeling | Expert in 2D/3D Traditional Inversion</p>
 </header>
 
 <div class="container">
+
     <!-- About Me -->
     <section id="about" class="animate__animated animate__fadeInLeft">
         <h2>About Me</h2>
@@ -85,8 +135,8 @@
         <p><strong>Ph.D. Researcher</strong> – Department of Earth Sciences, IIT Bombay (Present)</p>
         <ul>
             <li>Conducting high-fidelity 3D geophysical inversion for mineral exploration and general geophysical problems using both traditional and AI/ML-based methods.</li>
-            <li>Developed and modified a Bayesian trans-dimensional MCMC framework to jointly invert P-wave polarization and receiver function (RF) data for shallow crustal structure mapping — improving layer detection, reducing velocity variance, and increasing model convergence versus individual approaches.</li>
-            <li>Applied Short-Term Average / Long-Term Average (STA/LTA) trigger algorithm for seismic event detection — tuned parameters for weak-motion seismology to capture P- and S-wave arrivals while minimizing false triggers; validated on real datasets.</li>
+            <li>Developed and modified a Bayesian trans-dimensional MCMC framework to jointly invert P-wave polarization and receiver function (RF) data for shallow crustal structure mapping.</li>
+            <li>Applied Short-Term Average / Long-Term Average (STA/LTA) trigger algorithm for seismic event detection.</li>
             <li>Designed and trained deep learning architectures (CNN, Xception, ResNet) for inversion of multi-geophysical datasets and rapid 2D/3D model prediction.</li>
             <li>Implemented forward modeling and inversion algorithms in MATLAB and Python for both synthetic and field datasets.</li>
             <li>Collaborated on IndiaAI Hackathon 2025 project: AI/ML-driven mineral prospectivity mapping for Karnataka and Andhra Pradesh.</li>
@@ -97,10 +147,30 @@
     <section id="projects" class="animate__animated animate__fadeInRight">
         <h2>Projects</h2>
         <ul>
-            <li><strong>Joint Inversion Framework</strong>: Developed a MATLAB-based tool for gravity and magnetic data integration to improve subsurface characterization.</li>
-            <li><strong>Subsurface Modeling</strong>: Designed a 2D rectangular mesh-based forward modeling program for accurate anomaly detection.</li>
+            <li><strong>Joint Inversion Framework</strong>: Developed a MATLAB-based tool for gravity and magnetic data integration.</li>
+            <li><strong>Subsurface Modeling</strong>: Designed a 2D rectangular mesh-based forward modeling program for anomaly detection.</li>
             <li><strong>Optimization Tools</strong>: Created a problem-based optimization guidebook for MATLAB users.</li>
         </ul>
+    </section>
+
+    <!-- Work / Portfolio -->
+    <section id="work" class="animate__animated animate__fadeInUp">
+        <h2>Work / Portfolio</h2>
+        <div class="work-grid">
+            <div class="work-item">
+                <img src="images/work1.jpg" alt="Project 1">
+                <p>Project 1 Description</p>
+            </div>
+            <div class="work-item">
+                <img src="images/work2.jpg" alt="Project 2">
+                <p>Project 2 Description</p>
+            </div>
+            <div class="work-item">
+                <img src="images/work3.jpg" alt="Project 3">
+                <p>Project 3 Description</p>
+            </div>
+            <!-- Add more work items as needed -->
+        </div>
     </section>
 
     <!-- Contact -->
@@ -114,8 +184,10 @@
         </div>
         <p style="margin-top:12px; color:#555;">Location: Mumbai, India</p>
     </section>
+
 </div>
 
+<!-- Footer -->
 <footer class="animate__animated animate__fadeIn">
     <p>&copy; 2024 Saikat Mahato. All Rights Reserved.</p>
 </footer>
